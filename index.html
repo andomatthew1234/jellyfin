@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Connect</title>
+    <style>
+        :root {
+            --primary-color: #aa5cc3;
+            --primary-hover: #c476dd;
+            --text-color: #ffffff;
+            --text-muted: #e0e0e0;
+            --btn-bg: rgba(255, 255, 255, 0.1);
+            --btn-hover: rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow: hidden; /* Prevents scrollbars from the blurred background overflow */
+        }
+
+        /* The Blurred Background Image */
+        .background-blur {
+            position: fixed;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background-image: url('bg.jpg');
+            background-size: cover;
+            background-position: center;
+            filter: blur(12px);
+            z-index: -1;
+            /* Darkens the image slightly so the white text stays readable */
+            box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.4); 
+        }
+
+        /* Glassmorphism Hub Container */
+        .hub-container {
+            background: rgba(20, 20, 25, 0.65);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 1.05rem;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn {
+            display: block;
+            text-decoration: none;
+            color: var(--text-color);
+            background-color: var(--btn-bg);
+            padding: 16px 20px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            background-color: var(--btn-hover);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* The Biggest Button */
+        .btn.primary {
+            background-color: var(--primary-color);
+            font-size: 1.3rem;
+            font-weight: bold;
+            padding: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            box-shadow: 0 4px 15px rgba(170, 92, 195, 0.4);
+            margin-bottom: 10px;
+        }
+
+        .btn.primary:hover {
+            background-color: var(--primary-hover);
+            box-shadow: 0 6px 20px rgba(170, 92, 195, 0.6);
+        }
+
+        .section-divider {
+            margin: 15px 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        }
+        
+        .btn.local {
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px dashed rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn.local:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Background Image Layer -->
+    <div class="background-blur"></div>
+
+    <div class="hub-container">
+        <div class="header">
+            <h1>Quick connect</h1>
+            <p>Select an option below to get started.</p>
+        </div>
+
+        <div class="button-group">
+            <!-- Main Worldwide Connection -->
+            <a href="http://100.93.87.24:8096" target="_blank" class="btn primary">
+                Open server
+            </a>
+            
+            <!-- Jotform Requests -->
+            <a href="https://form.jotform.com/Magsgd/request" target="_blank" class="btn">
+                Request an account
+            </a>
+
+            <a href="https://form.jotform.com/Magsgd/request" target="_blank" class="btn">
+                Request media to add to the service
+            </a>
+
+            <div class="section-divider"></div>
+
+            <!-- Guest Session Script Trigger -->
+            <button class="btn" onclick="launchGuestSession()">
+                Generate a temporary guest session
+            </button>
+
+            <!-- Local Network Connection -->
+            <a href="http://192.168.20.33:8096" target="_blank" class="btn local">
+                Join on the local network
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Function to show guest credentials and redirect
+        function launchGuestSession() {
+            alert("Guest Session Created!\n\nPlease enter the following details on the next page:\n\nUSR: guest\nPASS: guest");
+            // Opens the worldwide server in a new tab after they click 'OK' on the alert
+            window.open("http://100.93.87.24:8096", "_blank");
+        }
+    </script>
+
+</body>
+</html>
