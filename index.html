@@ -134,6 +134,59 @@
             border-color: rgba(255, 255, 255, 0.6);
         }
 
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: rgba(20, 20, 25, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            animation: popIn 0.3s ease-out forwards;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .modal-content p {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .modal-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
     </style>
 </head>
 <body>
@@ -149,14 +202,14 @@
 
         <div class="button-group">
             <!-- Main Worldwide Connection -->
-            <a href="http://100.93.87.24:8096" target="_blank" class="btn primary">
+            <a href="https://tajuana-coroplastic-superdelicately.ngrok-free.dev" target="_blank" class="btn primary">
                 Open server
             </a>
 
-            <!-- Direct Media Request App (Port 5055) -->
-            <a href="http://100.93.87.24:5055" target="_blank" class="btn">
+            <!-- Direct Media Request App (Triggers Modal) -->
+            <button class="btn" onclick="showMediaModal()">
                 Request media
-            </a>
+            </button>
             
             <!-- Jotform Requests -->
             <a href="https://form.jotform.com/Magsgd/request" target="_blank" class="btn">
@@ -186,7 +239,37 @@
         </div>
     </div>
 
+    <!-- Media Request Modal -->
+    <div id="mediaModal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>LAN Access Required</h2>
+            <p>Requesting media is only availible on LAN for now.</p>
+            <p>Make sure you are connected to the network at my house, or try again later.</p>
+            <div class="modal-buttons">
+                <!-- Using the awesome local dashed style you already created! -->
+                <button class="btn local" onclick="continueOnLAN()">Continue on LAN</button>
+                <button class="btn" onclick="closeMediaModal()">Nevermind</button>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // --- Modal Functions ---
+        function showMediaModal() {
+            document.getElementById('mediaModal').style.display = 'flex';
+        }
+
+        function closeMediaModal() {
+            document.getElementById('mediaModal').style.display = 'none';
+        }
+
+        function continueOnLAN() {
+            // Opens Jellyseerr/Ombi on your local network
+            window.open("http://192.168.20.33:5055", "_blank");
+            closeMediaModal();
+        }
+
+        // --- Auth Functions ---
         // Function to handle the Access Code login system
         function useAccessCode() {
             let code = prompt("Please enter your Access Code:");
@@ -204,7 +287,8 @@
             if (validCodes[formattedCode]) {
                 let credentials = validCodes[formattedCode];
                 alert("🎉 Access Granted!\n\nPlease enter the following details on the next page:\n\nUSR: " + credentials.user + "\nPASS: " + credentials.pass);
-                window.open("http://100.93.87.24:8096", "_blank");
+                // Updated to use the new ngrok URL!
+                window.open("https://tajuana-coroplastic-superdelicately.ngrok-free.dev", "_blank");
             } else {
                 alert("❌ Invalid Access Code. Please try again or request an account!");
             }
@@ -213,7 +297,8 @@
         // Function to show guest credentials and redirect
         function launchGuestSession() {
             alert("Guest Session Created!\n\nPlease enter the following details on the next page:\n\nUSR: guest\nPASS: guest");
-            window.open("http://100.93.87.24:8096", "_blank");
+            // Updated to use the new ngrok URL!
+            window.open("https://tajuana-coroplastic-superdelicately.ngrok-free.dev", "_blank");
         }
     </script>
 
