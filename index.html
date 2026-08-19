@@ -270,27 +270,36 @@
         }
 
         // --- Auth Functions ---
-        // Function to handle the Access Code login system
-        function useAccessCode() {
+        // Function to handle the Access Code login system using codes.json
+        async function useAccessCode() {
             let code = prompt("Please enter your Access Code:");
             
             // If they click cancel or enter nothing, just stop
             if (!code) return; 
 
-            // Our mini-database of valid access codes
-            const validCodes = {
-                "ECHO-IVAN": { user: "iy", pass: "ivan.yang" }
-            };
-
             let formattedCode = code.trim().toUpperCase();
 
-            if (validCodes[formattedCode]) {
-                let credentials = validCodes[formattedCode];
-                alert("🎉 Access Granted!\n\nPlease enter the following details on the next page:\n\nUSR: " + credentials.user + "\nPASS: " + credentials.pass);
-                // Updated to use the new ngrok URL!
-                window.open("https://tajuana-coroplastic-superdelicately.ngrok-free.dev", "_blank");
-            } else {
-                alert("❌ Invalid Access Code. Please try again or request an account!");
+            try {
+                // Fetch the external codes.json file
+                const response = await fetch('codes.json');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const validCodes = await response.json();
+
+                if (validCodes[formattedCode]) {
+                    let credentials = validCodes[formattedCode];
+                    alert("🎉 Access Granted!\n\nPlease enter the following details on the next page:\n\nUSR: " + credentials.user + "\nPASS: " + credentials.pass);
+                    // Updated to use the new ngrok URL!
+                    window.open("https://tajuana-coroplastic-superdelicately.ngrok-free.dev", "_blank");
+                } else {
+                    alert("❌ Invalid Access Code. Please try again or request an account!");
+                }
+            } catch (error) {
+                console.error("Failed to load codes.json:", error);
+                alert("⚠️ Oops! Couldn't load the access codes. Make sure you are running this through a web server and not just double-clicking the HTML file!");
             }
         }
 
