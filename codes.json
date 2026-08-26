@@ -6,5 +6,9 @@
     "IHISBUNS": { 
         "user": "ih", 
         "pass": "freshouttheoven" 
+    },
+        "MZ": { 
+        "user": "mz", 
+        "pass": "randompassword" 
     }
 }
