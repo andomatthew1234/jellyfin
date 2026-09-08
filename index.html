@@ -202,8 +202,8 @@
 
         <div class="button-group">
             <!-- Main Worldwide Connection -->
-            <a href="https://gr.ngrok.app" target="_blank" class="btn primary">
-                Open server
+            <a href="#" id="main-server-btn" target="_blank" class="btn primary">
+                Locating server...
             </a>
 
             <!-- Direct Media Request App (Triggers Modal) -->
@@ -254,6 +254,32 @@
     </div>
 
     <script>
+        // --- Dynamic URL Fetching ---
+        let activeServerUrl = "#"; // Fallback until fetched
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            const mainBtn = document.getElementById('main-server-btn');
+            
+            try {
+                // We will replace this URL later with JSONBin or a GitHub Gist API link
+                const response = await fetch('server.json');
+                const data = await response.json();
+                
+                // Assuming the API returns a JSON object like: { "url": "https://new-tunnel.ngrok.app" }
+                if (data.url) {
+                    activeServerUrl = data.url;
+                    mainBtn.href = activeServerUrl;
+                    mainBtn.innerText = "Open server";
+                } else {
+                    mainBtn.innerText = "Server Offline";
+                }
+            } catch (error) {
+                console.error("Failed to load server URL:", error);
+                mainBtn.innerText = "Server Offline";
+            }
+        });
+
+
         // --- Modal Functions ---
         function showMediaModal() {
             document.getElementById('mediaModal').style.display = 'flex';
@@ -292,8 +318,13 @@
                 if (validCodes[formattedCode]) {
                     let credentials = validCodes[formattedCode];
                     alert("🎉 Access Granted!\n\nPlease enter the following details on the next page:\n\nUSR: " + credentials.user + "\nPASS: " + credentials.pass);
-                    // Updated to use the new ngrok URL!
-                    window.open("https://tajuana-coroplastic-superdelicately.ngrok-free.dev", "_blank");
+                    
+                    // Uses the dynamically fetched URL!
+                    if(activeServerUrl !== "#") {
+                        window.open(activeServerUrl, "_blank");
+                    } else {
+                        alert("Server is currently offline. Try again later.");
+                    }
                 } else {
                     alert("❌ Invalid Access Code. Please try again or request an account!");
                 }
@@ -306,8 +337,13 @@
         // Function to show guest credentials and redirect
         function launchGuestSession() {
             alert("Guest Session Created!\n\nPlease enter the following details on the next page:\n\nUSR: guest\nPASS: guest");
-            // Updated to use the new ngrok URL!
-            window.open("https://tajuana-coroplastic-superdelicately.ngrok-free.dev", "_blank");
+            
+            // Uses the dynamically fetched URL!
+            if(activeServerUrl !== "#") {
+                window.open(activeServerUrl, "_blank");
+            } else {
+                alert("Server is currently offline. Try again later.");
+            }
         }
     </script>
 
