@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select your Jellyfin Plan</title>
+    <style>
+        :root {
+            --primary: #00a4dc;
+            --purple: #7b61ff;
+            --text: #ffffff;
+            --text-muted: #b0b0b0;
+            --overlay: rgba(20, 20, 25, 0.85); /* Keeps text readable over images */
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: url('../../bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text);
+            margin: 0;
+            padding: 3rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-weight: 600;
+            font-size: 2rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .pricing-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            max-width: 1000px;
+            width: 100%;
+            align-items: stretch;
+        }
+
+        .card {
+            border-radius: 6px;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            backdrop-filter: blur(10px);
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+        }
+
+        /* Card Backgrounds */
+        .card.basic {
+            background-image: linear-gradient(var(--overlay), var(--overlay)), url('img/basic.jpg');
+        }
+
+        .card.current {
+            background-image: linear-gradient(var(--overlay), var(--overlay)), url('img/main.png');
+            border: 2px solid var(--primary);
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(0, 164, 220, 0.15);
+        }
+
+        .card.premium {
+            background-image: linear-gradient(var(--overlay), var(--overlay)), url('img/spark.jpg');
+            border: 2px solid var(--purple);
+        }
+
+        .plan-title {
+            font-size: 1.3rem;
+            margin: 0 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .plan-price {
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .plan-price span {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: normal;
+        }
+
+        .plan-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 0;
+            margin-bottom: 2rem;
+            line-height: 1.4;
+            min-height: 40px;
+        }
+
+        .features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 2rem 0;
+            flex-grow: 1;
+        }
+
+        .features li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            line-height: 1.4;
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+            width: 100%;
+        }
+
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            filter: brightness(1.1);
+        }
+
+        .btn-premium {
+            background: var(--purple);
+            color: white;
+        }
+
+        .btn-premium:hover {
+            filter: brightness(1.1);
+        }
+
+        .cancel-container {
+            margin-top: 3rem;
+        }
+
+        .cancel-link {
+            color: #ff6b6b;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+            backdrop-filter: blur(4px);
+        }
+
+        .cancel-link:hover {
+            background: rgba(0,0,0,0.6);
+            border-color: rgba(255, 107, 107, 0.5);
+        }
+
+        .cancel-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #ff4d4d;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        @media (max-width: 900px) {
+            .pricing-container {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+            .card.current {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Select your Jellyfin plan to continue</h1>
+
+    <div class="pricing-container">
+        
+        <!-- Basic Plan -->
+        <div class="card basic">
+            <h2 class="plan-title">🟦 Jellyfin Basic</h2>
+            <div class="plan-price">$4.99<span>/month</span></div>
+            <p class="plan-desc">A simple option for watching the Movie library.</p>
+            <ul class="features">
+                <li>📹 720p internet streaming</li>
+                <li>❌ No downloads</li>
+                <li>📚 Access to the Movie library</li>
+                <li>🚫 No ads on movie library</li>
+            </ul>
+            <button class="btn btn-outline" onclick="handleSelection('D - Downgrade to Jellyfin Basic')">Downgrade</button>
+        </div>
+
+        <!-- Standard Plan (Current) -->
+        <div class="card current">
+            <h2 class="plan-title">⭐ Jellyfin Standard</h2>
+            <div class="plan-price">$5.99<span>/month</span></div>
+            <p class="plan-desc">The perfect middle ground for streaming and offline viewing.</p>
+            <ul class="features">
+                <li>📹 Up to 720p internet streaming</li>
+                <li>🔽 Up to 2 offline downloads/day</li>
+                <li>📚 All movies & TV shows</li>
+            </ul>
+            <button class="btn btn-primary" onclick="window.location.href='https://buy.stripe.com/fZueVedgc63j4zGamm53O0l'">Continue with Standard</button>
+        </div>
+
+        <!-- Spark Plan (Premium) -->
+        <div class="card premium">
+            <h2 class="plan-title">⚡ Jellyfin Spark</h2>
+            <div class="plan-price">$9.99<span>/month</span></div>
+            <p class="plan-desc">The premium Jellyfin experience with top-tier perks.</p>
+            <ul class="features">
+                <li>⏭️ Stream in up to 4K resolution</li>
+                <li>⏬ Unlimited downloads for offline access</li>
+                <li>⏩ Faster library loading with priority access</li>
+                <li>🛜 Share with 1 friend (they get Basic free)</li>
+            </ul>
+            <button class="btn btn-premium" onclick="window.location.href='https://buy.stripe.com/bJe14o4JGbnD8PWcuu53O0m'">Upgrade to Spark</button>
+        </div>
+
+    </div>
+
+    <div class="cancel-container">
+        <a class="cancel-link" onclick="handleSelection('AC - Cancel my Jellyfin plan')">
+            <span class="cancel-dot"></span> Cancel my Jellyfin plan
+        </a>
+    </div>
+
+    <script>
+        // Kept this for the buttons that don't have links yet
+        function handleSelection(option) {
+            console.log("User selected:", option);
+            alert("No link configured for this action yet:\n" + option);
+        }
+    </script>
+</body>
+</html>
